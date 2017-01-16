@@ -28,6 +28,7 @@
 .ui.card .content .header {
   margin-bottom: 5%;
 }
+
 .price span {
   /*border: 1px solid yellow;*/
   /*text-align: center;*/
@@ -37,6 +38,7 @@
 .price .original-price {
   text-decoration: line-through;
   color: #888;
+  margin-right: 2%;
 }
 .price .member-price {
   color: green;
@@ -70,7 +72,21 @@
   width: 100%;
 }
 
+/* LISTINGS */
+#listings {
+  padding: 3em 0;
+}
+
+#listings .card {
+  margin: 1em 0;
+}
+
 #listings .card img {
   width: 100%;
-  height: 100%;
+  height: 10em;
+}
+
+#listings .card img {
+  width: 100%;
+  height: 10em;
 }
