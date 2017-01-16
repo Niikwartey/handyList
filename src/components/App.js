@@ -1,57 +1,55 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
+import { Container, Grid, Segment, Input, Icon, Image, Loader } from 'semantic-ui-react';
+import ListCard from './listing_card.js';
 import '../component_styles/App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {listings: null};
+  }
+
+  componentDidMount() {
+    $.get("/data/listings.json", (data) => {
+      const listings = data.map((list_item) => {
+        return(
+          <Grid.Column>
+            <ListCard
+              description={list_item.description}
+              company={list_item.company}
+              imageUrl={list_item.imageUrl}
+              price={list_item.price}
+            />
+          </Grid.Column>
+        )
+      });
+
+      this.setState({listings});
+    });
+  }
+
   render() {
     return(
       <div>
-        <div id="jumbo-search" className="ui center aligned padded segment">
+        <Segment id="jumbo-search" padded textAlign="center">
           <div className="jumbotron">
             <h2>What are you looking for?</h2>
-            <div className="ui icon huge input">
-              <input type="text" placeholder="eg. TV Repair, Plumbing etc."/>
-              <i className="inverted green circular search link icon"></i>
-            </div>
+            <Input icon={<Icon name='search' inverted color="green" circular link />}
+            placeholder='eg. TV Repair, Plumbing etc.' size="huge"/>
           </div>
-        </div>
+        </Segment>
 
-        <div className="ui center aligned segment">
-          <div className="ui container">
-            <div className="ui grid">
-              <div id="listings" className="four column doubling row">
-                 {/* each item in listing */}
-                <div className="column">
-                  <div className="ui centered card">
-                    <div className="image">
-                      <img src="http://www.coyotehandyman.com/images/coyote%20handyman%20header.jpg"/>
-                    </div>
-                    <div className="content">
-                      <div className="header">
-                        $149 for a Home Interior Mold and Water Damage Inspection and $149 Credit
-                      </div>
-                      <div className="meta">
-                        Offered by: <a href="#">24/7 Property Cleaning & Restoration</a>
-                      </div>
-
-                    </div>
-                    <div className="extra content price">
-                      <span className="original-price">
-                        $1000
-                      </span>
-                      <span className="member-price">
-                        $799
-                      </span>
-                    </div>
-
-                    <a className="ui inverted orange bottom attached button" href="#">
-                      View Offer
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Segment textAlign="center">
+          <Container fluid>
+            <Grid doubling columns={4} id="listings" className="container">
+              {this.state.listings || <Segment>
+                <Loader active size='massive'>Loading</Loader>
+                <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
+              </Segment>}
+            </Grid>
+          </Container>
+        </Segment>
       </div>
     )
   }
