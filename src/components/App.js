@@ -43,10 +43,8 @@ class App extends Component {
         <Segment textAlign="center">
           <Container fluid>
             <Grid doubling columns={4} id="listings" className="container">
-              {this.state.listings || <Segment>
-                <Loader active size='massive'>Loading</Loader>
-                <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
-              </Segment>}
+              {this.state.listings ||
+                <Loader active content="Loading" size='huge' className="jumbo-loader"/>}
             </Grid>
           </Container>
         </Segment>
